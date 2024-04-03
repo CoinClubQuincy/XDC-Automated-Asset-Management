@@ -35,9 +35,6 @@ The future of blockchain technology is about connecting siloed entities that str
 
 The more participant that operate in this way the more engagement this online economy can facilitate an the better the trade volume globally.
 
-
-**Github:** https://github.com/CoinClubQuincy/XDC-BrokerageDapp
-
 #  Tokenized Asset Contract
 ![template contracts-2](https://user-images.githubusercontent.com/16103963/228897898-711805d3-ebfc-4194-aa93-b0f782b6ab4a.png)
 
