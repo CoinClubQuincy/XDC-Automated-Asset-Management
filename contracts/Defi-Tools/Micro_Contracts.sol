@@ -2,10 +2,37 @@
 
 /// @title MICRO Contract
 /// @author R Quincy Jones
-/// @notice This is a template that automated a set of conditions based on ia set of rule
+/// @notice This is a template that sets parameters and passes them to other contracts
 /// @dev This contract takes in a data schema and triggers contitions based on the input data
 
 pragma solidity >=0.8.2 <0.9.0;
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 
-contract MICRO {}
+contract MICRO {
+    bool public initialized = false;
+    Parameters public parameters;
+    struct Parameters {
+        uint256 transacted_funds_rate;
+        uint256 liquid_invoice_rate;
+    }
+    function initialize(uint set_transacted_funds_rate, uint set_liquid_invoice_rate) public returns(bool) {
+        require(!initialized, "Already initialized");
+        Parameters.transacted_funds_rate = set_transacted_funds_rate;
+        Parameters.liquid_invoice_rate = set_liquid_invoice_rate;
+        initialized = true;
+        return true;
+    }  
+    function view_single_parameter(string memory parameter) public view returns (bool) {
+        if (keccak256(abi.encodePacked(parameter)) == keccak256(abi.encodePacked("transacted_funds_rate"))) { return Parameters.transacted_funds_rate; }
+        if (keccak256(abi.encodePacked(parameter)) == keccak256(abi.encodePacked("liquid_invoice_rate"))) { return Parameters.liquid_invoice_rate; }
+        else { revert("Parameter not found"); }
+    }
+    function view_all_parameters() public view returns (Parameters memory) {
+        return Parameters;
+    }
+    function set_single_parameter(string memory parameter, uint256 value) public {
+        if (keccak256(abi.encodePacked(parameter)) == keccak256(abi.encodePacked("transacted_funds_rate"))) { Parameters.transacted_funds_rate = value; }
+        if (keccak256(abi.encodePacked(parameter)) == keccak256(abi.encodePacked("liquid_invoice_rate"))) { Parameters.liquid_invoice_rate = value; }
+        else { revert("Parameter not found"); }
+    }
+}
