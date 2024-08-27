@@ -7,8 +7,9 @@
 
 pragma solidity >=0.8.2 <0.9.0;
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+import "./GeneralDeployer.sol";
 
-contract MICRO {
+contract MICRO is ManagerDeployer {
     bool public initialized = false;
     Parameters public parameters;
     struct Parameters {
@@ -20,6 +21,7 @@ contract MICRO {
         Parameters.transacted_funds_rate = set_transacted_funds_rate;
         Parameters.liquid_invoice_rate = set_liquid_invoice_rate;
         initialized = true;
+        singleDeployerActive = false;
         return true;
     }  
     function view_single_parameter(string memory parameter) public view returns (bool) {
