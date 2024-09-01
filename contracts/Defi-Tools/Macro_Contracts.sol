@@ -11,13 +11,13 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 contract MACRO {
     bool public initialized = false;
     uint public schemaCount = 0;
-    Schema[] public schemaHistory;
+    Schema public schemaHistory;
 
     struct Schema {
         History[] history;
     }
     struct History{
-        string[] schema;
+        string schema;
     }
 
     function initialize(string[] memory _Schema) {
@@ -32,10 +32,11 @@ contract MACRO {
         _;
     }
 
-    function modifySchema(int _index,string memory _data) public returns(string memory){
+    function modifySchema(string memory _data) public returns(string memory){
         require(_index <= schemaCount,"Index out of range");
-        schemaHistory[_index] = _data;
-        return schemaHistory[_index];
+        schemaCount++;
+        schemaHistory.history[schemaCount] = _data;
+        return schemaHistory.history[schemaCount];
     }
 
     function viewAllSchemaHistory() public view returns(History[] memory){
@@ -43,7 +44,7 @@ contract MACRO {
     }
 
     function viewCurrentSchema() public view returns(string[] memory){
-        return schemaHistory[schemaCount].schema;
+        return schemaHistory.history[schemaCount];
     }
 } 
 
